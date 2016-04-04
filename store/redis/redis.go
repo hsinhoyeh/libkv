@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/docker/libkv"
-	"github.com/docker/libkv/store"
+	"github.com/hsinhoyeh/libkv"
+	"github.com/hsinhoyeh/libkv/store"
 
 	"gopkg.in/redis.v3"
 )

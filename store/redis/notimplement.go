@@ -3,7 +3,7 @@ package redis
 import (
 	"errors"
 
-	"github.com/docker/libkv/store"
+	"github.com/hsinhoyeh/libkv/store"
 )
 
 var (
