@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/docker/libkv/testutils"
-	"github.com/hsinhoyeh/libkv"
-	"github.com/hsinhoyeh/libkv/store"
+	"github.com/maichain/libkv"
+	"github.com/maichain/libkv/store"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +16,9 @@ var (
 func makeRedisClient(t *testing.T) store.Store {
 	kv, err := New(
 		[]string{client},
-		nil,
+		&store.Config{
+			Password: "", // password is empty by default
+		},
 	)
 
 	if err != nil {
