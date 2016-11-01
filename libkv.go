@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/hsinhoyeh/libkv/store"
+	"github.com/maichain/libkv/store"
 )
 
 // Initialize creates a new Store object, initializing the client

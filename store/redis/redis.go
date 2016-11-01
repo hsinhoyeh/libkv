@@ -5,8 +5,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/hsinhoyeh/libkv"
-	"github.com/hsinhoyeh/libkv/store"
+	"github.com/maichain/libkv"
+	"github.com/maichain/libkv/store"
 
 	"gopkg.in/redis.v3"
 )
@@ -16,8 +16,15 @@ var (
 	// multiple endpoints specified for Redis
 	ErrMultipleEndpointsUnsupported = errors.New("redis does not support multiple endpoints")
 
+	// ErrMultiplePasswordsUnsupported is thrown when there are
+	// multiple passwords specified for Redis
+	ErrMultiplePasswordsUnsupported = errors.New("redis does not support multiple passwords")
+
 	// ErrTLSUnsupported is thrown when tls config is given
 	ErrTLSUnsupported = errors.New("redis does not support tls")
+
+	// ErrMissingOptions is thrown when tls config is given
+	ErrMissingOptions = errors.New("the options are needed by redis")
 )
 
 // Register registers consul to libkv
@@ -31,13 +38,18 @@ func New(endpoints []string, options *store.Config) (store.Store, error) {
 	if len(endpoints) > 1 {
 		return nil, ErrMultipleEndpointsUnsupported
 	}
-	if options != nil {
+	if options == nil {
+		return nil, ErrMissingOptions
+	}
+	if options.ClientTLS != nil ||
+		options.TLS != nil {
 		return nil, ErrTLSUnsupported
 	}
 
 	// TODO: use *redis.ClusterClient if we support miltiple endpoints
 	client := redis.NewClient(&redis.Options{
 		Addr:         endpoints[0],
+		Password:     options.Password, //TODO: make sure that the password can be supported in *redis.ClusterClientg
 		DialTimeout:  5 * time.Second,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
