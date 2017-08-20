@@ -12,8 +12,8 @@ import (
 	"golang.org/x/net/context"
 
 	etcd "github.com/coreos/etcd/client"
-	"github.com/docker/libkv"
-	"github.com/docker/libkv/store"
+	"github.com/hsinhoyeh/libkv"
+	"github.com/hsinhoyeh/libkv/store"
 )
 
 var (
